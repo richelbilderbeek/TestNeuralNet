@@ -20,14 +20,14 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------
 #include <cassert>
 #include <cstdlib>
-//---------------------------------------------------------------------------
+
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/foreach.hpp>
-//---------------------------------------------------------------------------
+
 #include <ReClaM/createConnectionMatrix.h>
-//---------------------------------------------------------------------------
+
 #include "neuralnet.h"
-//---------------------------------------------------------------------------
+
 NeuralNet::NeuralNet(
   const int n_inputs,
   const int n_hidden_neurons,
@@ -49,7 +49,7 @@ NeuralNet::NeuralNet(
     == this->GetNumberOfNeurons()
       && "Assume GetNumberOfNeurons() works fine");
 }
-//---------------------------------------------------------------------------
+
 ///Calls FFNet's copy constructor
 NeuralNet::NeuralNet(const NeuralNet& n)
   : FFNet(n),
@@ -61,15 +61,14 @@ NeuralNet::NeuralNet(const NeuralNet& n)
   //an infinite function call stack
   //assert(n == *this);
 }
-//---------------------------------------------------------------------------
-  ///Assignment operator
+
 NeuralNet& NeuralNet::operator=(const NeuralNet& other)
 {
   NeuralNet temp(other);
   Swap(temp);
   return *this;
 }
-//---------------------------------------------------------------------------
+
 void NeuralNet::Swap(NeuralNet& other)
 {
   std::swap(m_number_of_inputs,other.m_number_of_inputs);
@@ -79,7 +78,7 @@ void NeuralNet::Swap(NeuralNet& other)
   std::swap(connectionMatrix,other.connectionMatrix);
   std::swap(weightMatrix,other.weightMatrix);
 }
-//---------------------------------------------------------------------------
+
 Array<int> NeuralNet::CreateConnectionMatrix(
   const int n_inputs,
   const int n_hidden,
@@ -89,7 +88,7 @@ Array<int> NeuralNet::CreateConnectionMatrix(
   createConnectionMatrix(m,n_inputs, n_hidden, n_outputs);
   return m;
 }
-//---------------------------------------------------------------------------
+
 ///Activate uses default FFNet::activate method
 ///FFNet::activate is not a const method
 ///The code below proofs that the FFNet is not
@@ -113,7 +112,7 @@ void NeuralNet::Activate(const Array<double> &inputs) const
     && "Proof that neural net does not change");
   #endif
 }
-//---------------------------------------------------------------------------
+
 std::vector<int> NeuralNet::GetConnections() const
 {
   #define CHECK_ARCHITECTURE_165254
@@ -131,33 +130,33 @@ std::vector<int> NeuralNet::GetConnections() const
   const std::vector<int> v = ConvertToVector(this->connectionMatrix);
   return v;
 }
-//---------------------------------------------------------------------------
+
 int NeuralNet::GetNumberOfInputs() const
 {
   return m_number_of_inputs;
 }
-//---------------------------------------------------------------------------
+
 int NeuralNet::GetNumberOfHiddenNeurons() const
 {
   return m_number_of_hidden_neurons;
 }
-//---------------------------------------------------------------------------
+
 int NeuralNet::GetNumberOfNeurons() const
 {
   return boost::numeric_cast<int>(this->numberOfNeurons);
 }
-//---------------------------------------------------------------------------
+
 int NeuralNet::GetNumberOfOutputs() const
 {
   return m_number_of_outputs;
 }
-//---------------------------------------------------------------------------
+
 std::vector<double> NeuralNet::GetWeights() const
 {
   const std::vector<double> v = ConvertToVector(this->weightMatrix);
   return v;
 }
-//---------------------------------------------------------------------------
+
 double NeuralNet::GetOutputValue(const int index) const
 {
   assert(index >= 0 && index < this->GetNumberOfNeurons());
@@ -166,7 +165,7 @@ double NeuralNet::GetOutputValue(const int index) const
   const double output = n->outputValue(index);
   return output;
 }
-//---------------------------------------------------------------------------
+
 std::vector<double> NeuralNet::GetOutputLayerOutputValues() const
 {
   std::vector<double> v;
@@ -189,7 +188,7 @@ std::vector<double> NeuralNet::GetOutputLayerOutputValues() const
 
   return v;
 }
-//---------------------------------------------------------------------------
+
 ///Due to funny Array behavior, it is needed
 ///to implement Mutate a bit clumsily
 void NeuralNet::Mutate(const double m)
@@ -201,7 +200,7 @@ void NeuralNet::Mutate(const double m)
   }
   this->weightMatrix = weights;
 }
-//---------------------------------------------------------------------------
+
 ///Propagate creates the output of a neural network for certain inputs
 std::vector<double> NeuralNet::PropagateArray(const Array<double> &inputs) const
 {
@@ -215,13 +214,13 @@ std::vector<double> NeuralNet::PropagateArray(const Array<double> &inputs) const
     == this->GetNumberOfOutputs());
   return v;
 }
-//---------------------------------------------------------------------------
+
 std::vector<double> NeuralNet::Propagate(const std::vector<double> &inputs) const
 {
   const Array<double> a = ConvertToArray(inputs);
   return this->PropagateArray(a);
 }
-//---------------------------------------------------------------------------
+
 //Cannot call methods, because it causes
 //an infinite function call stack:
 bool operator==(const NeuralNet& lhs, const NeuralNet& rhs)
@@ -233,10 +232,10 @@ bool operator==(const NeuralNet& lhs, const NeuralNet& rhs)
   && lhs.connectionMatrix == rhs.connectionMatrix
   && lhs.weightMatrix == rhs.weightMatrix);
 }
-//---------------------------------------------------------------------------
+
 //From http://www.richelbilderbeek.nl/CppGetRandomUniform.htm
 double GetRandomUniform()
 {
   return static_cast<double>(std::rand())/static_cast<double>(RAND_MAX);
 }
-//---------------------------------------------------------------------------
+

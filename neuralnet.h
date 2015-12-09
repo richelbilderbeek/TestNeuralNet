@@ -20,10 +20,10 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 //---------------------------------------------------------------------------
 #ifndef NEURALNET_H
 #define NEURALNET_H
-//---------------------------------------------------------------------------
+
 #include <Array/Array.h>
 #include <ReClaM/FFNet.h>
-//---------------------------------------------------------------------------
+
 ///NeuralNet is a derived class of FFNet
 ///to gain access to some protected methods of FFNet
 struct NeuralNet : public FFNet
@@ -80,19 +80,19 @@ struct NeuralNet : public FFNet
 
   friend bool operator==(const NeuralNet& lhs, const NeuralNet& rhs);
 };
-//---------------------------------------------------------------------------
+
 bool operator==(const NeuralNet& lhs, const NeuralNet& rhs);
-//---------------------------------------------------------------------------
+
 ///GetRandomUniform draws a random number in range [0,1>
 ///From http://www.richelbilderbeek.nl/CppGetRandomUniform.htm
 double GetRandomUniform();
-//---------------------------------------------------------------------------
+
 template <class T>
 std::vector<T> ConvertToVector(const Array<T> a)
 {
   return std::vector<T>(a.begin(),a.end());
 }
-//---------------------------------------------------------------------------
+
 template <class T>
 Array<T> ConvertToArray(const std::vector<T>& v)
 {
@@ -101,5 +101,5 @@ Array<T> ConvertToArray(const std::vector<T>& v)
   a.append_elems(v_copy);
   return a;
 }
-//---------------------------------------------------------------------------
+
 #endif // NEURALNET_H
